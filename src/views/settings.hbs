@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações | Happy</title>
+
+  <link rel="icon" href="/images/logo-icon.png" />
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/form.css" />
+  <link rel="stylesheet" href="/css/buttons.css" />
+  <link rel="stylesheet" href="/css/settings.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="settings">
+    <aside class="animate-right sidebar">
+      <img src="/images/map-marker.svg" alt="Happy" />
+
+      <footer>
+        <button onclick="history.back()">
+          <img src="/images/arrow-back.svg" alt="Voltar" />
+        </button>
+      </footer>
+    </aside>
+
+    <main class="animate-appear with-sidebar">
+      <form action="settings" method="POST" onsubmit="validate(event)">
+        <fieldset>
+          <legend>Dados da sua cidade</legend>
+
+
+
+          <div class="input-block">
+            <label for="cityName">Nome da sua cidade</label>
+            <input type="text" id="cityName" name="cityName" required />
+          </div>
+
+           <div class="input-block">
+            <label for="stateName">Nome do seu estado</label>
+            <input type="text" id="stateName" name="stateName" required />
+          </div>
+
+           <div class="geo-inputs">
+            <div class="input-block">
+              <label for="lat">Latitude</label>
+              <input type="text" id="lat" name="lat" required />
+            </div>
+
+            <div class="input-block">
+              <label for="lng">Longitude</label>
+              <input type="text" id="lng" name="lng" required />
+            </div>
+
+           </div>
+           
+
+
+
+          <button type="submit" class="primary-button">Confirmar</button>
+
+        </fieldset>
+
+
+      </form>
+    </main>
+  </div>
+
+  <span hidden
+    data-settings="{{settingsData}}"
+  ></span>
+
+</body>
+
+</html>

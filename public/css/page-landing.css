@@ -115,3 +115,9 @@ main h1 {
     margin: initial;
   }
 }
+
+/* @media screen and (max-device-height: 613px) {
+  :root {
+    font-size: 54,1%;
+  }
+} */

@@ -18,6 +18,12 @@ server
 .get('/orphanage', pages.orphanage)
 .get('/orphanages', pages.orphanages)
 .get('/create-orphanage', pages.createOrphanage)
+.get('/edit-orphanage', pages.editOrphanage)
+.get('/delete-orphanage', pages.deleteOrphanage)
+.get('/administration', pages.administration)
+.get('/settings', pages.settings)
+.post('/settings', pages.settings)
 .post('/save-orphanage', pages.saveOrphanage)
+.post('/edit-orphanage', pages.editOrphanage)
 
 server.listen(5500);

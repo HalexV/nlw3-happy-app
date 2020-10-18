@@ -1,0 +1,21 @@
+#settings {
+  display: flex;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.geo-inputs {
+  margin-top: 2.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.geo-inputs .input-block + .input-block {
+  margin: 0 0 0 1rem;
+}
+

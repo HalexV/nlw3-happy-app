@@ -14,6 +14,14 @@ function execute(db) {
       opening_hours TEXT,
       open_on_weekends TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS settings (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      city_name TEXT,
+      state_name TEXT,
+      lat TEXT,
+      lng TEXT
+    );
   `);
 }
 
