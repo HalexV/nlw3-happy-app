@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
 </head>
 
-<body>
+<body onload="loadSettingsData()">
   <div id="settings">
     <aside class="animate-right sidebar">
       <img src="/images/map-marker.svg" alt="Happy" />
@@ -31,7 +31,7 @@
     </aside>
 
     <main class="animate-appear with-sidebar">
-      <form action="settings" method="POST" onsubmit="validate(event)">
+      <form id="settings-form" action="settings" method="POST" onsubmit="validate(event)">
         <fieldset>
           <legend>Dados da sua cidade</legend>
 
@@ -75,7 +75,7 @@
   <span hidden
     data-settings="{{settingsData}}"
   ></span>
-
+  <script src="/scripts/page-settings.js"></script>
 </body>
 
 </html>

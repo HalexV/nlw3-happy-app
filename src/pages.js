@@ -3,6 +3,15 @@ const saveOrphanage = require("./database/saveOrphanage");
 const updateOrphanage = require("./database/updateOrphanage");
 const saveSettings = require("./database/saveSettings");
 const updateSettings = require("./database/updateSettings");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const authConfig = require("./config/auth.json");
+
+function generateToken(params = {}) {
+  return jwt.sign(params, authConfig.secret, {
+    expiresIn: 24 * 60 * 60,
+  });
+}
 
 module.exports = {
   index(req, res) {
@@ -167,9 +176,7 @@ module.exports = {
   },
 
   async settings(req, res) {
-
     if (req.method === "POST") {
-      
       try {
         const fields = req.body;
 
@@ -177,53 +184,81 @@ module.exports = {
 
         const results = await db.all("SELECT * FROM settings");
 
+        // save settings
         if (!results.length) {
-          console.log("entrei");
           await saveSettings(db, {
             city_name: fields.cityName,
             state_name: fields.stateName,
             lat: fields.lat,
-            lng: fields.lng
+            lng: fields.lng,
           });
 
-          return res.redirect('administration');
-        }
-        
-        return res.redirect('administration');
-      } catch (err) {
-        
-      }
-      
-      
-    } else {
-      try {
-        const db = await Database;
-
-        const results = await db.all("SELECT * FROM settings");
-
-        let settingsData = results[0];
-
-        if (!settingsData) {
-          settingsData  = {haveData: false};
-
-          settingsData = JSON.stringify(settingsData);
-
-          return res.render('settings', { settingsData });
+          return res.redirect("administration");
         }
 
-        settingsData.haveData = true;
+        // update settings
+        await updateSettings(db, {
+          id: results[0].id,
+          city_name: fields.cityName,
+          state_name: fields.stateName,
+          lat: fields.lat,
+          lng: fields.lng,
+        });
 
-        settingsData = JSON.stringify(settingsData);
-
-        return res.render('settings', { settingsData });
-
+        return res.redirect("administration");
       } catch (err) {
         console.log(err);
         return res.send("Erro no banco de dados!");
       }
+    } else {
+      // method GET
 
+      const settingsData = JSON.stringify(res.locals.settingsData);
 
+      return res.render("settings", { settingsData });
+    }
+  },
+
+  async login(req, res) {
+    if (req.method === "POST") {
+      const { email, password } = req.body;
+      const db = await Database;
+
+      try {
+        const user = await db.get(
+          `SELECT * FROM users WHERE email="${email}";`
+        );
+
+        if (!user) {
+          const errors = { emailError: "Email incorreto!" };
+
+          return res.status(400).json({ errors });
+        }
+
+        if (!(await bcrypt.compare(password, user.password))) {
+          const errors = { passwordError: "Senha incorreta!" };
+
+          return res.status(400).json({ errors });
+        }
+
+        const token = generateToken({ id: user.id });
+
+        res.cookie("jwt", token, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000,
+        });
+
+        return res.status(200).json({ user: user.id });
+      } catch (err) {
+        console.log(err);
+      }
     }
 
+    return res.render("login");
+  },
+
+  logout(req, res) {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
   },
 };

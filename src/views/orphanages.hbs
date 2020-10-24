@@ -1,78 +1,91 @@
 <!DOCTYPE html>
-<html lang="pt_BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Localize um orfanato | Happy</title>
+<html lang="pt-br">
 
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Localize um orfanato | Happy</title>
 
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
 
-    <link rel="icon" href="/images/logo-icon.png" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
 
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="/css/animations.css" />
-    <link rel="stylesheet" href="/css/page-orphanages.css" />
+  <link rel="icon" href="/images/logo-icon.png" />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="page-orphanages">
-      <aside class="animate-right">
-        <header>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/page-orphanages.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="page-orphanages">
+    <aside class="animate-right">
+      <header>
+        <a href="/">
+
           <img src="/images/map-marker.svg" alt="Happy" />
+        </a>
 
-          <h2>Escolha um orfanato no mapa</h2>
+        <h2>Escolha um orfanato no mapa</h2>
 
-          <p>Muitas crianças estão esperando sua visita :)</p>
-        </header>
+        <p>Muitas crianças estão esperando sua visita :)</p>
+      </header>
 
-        <footer>
-          <strong>Rio do Sul</strong>
+      <footer>
+        <div class="user-access">
+          {{#if user}}
+            <a href="/administration">Administração</a>
 
-          <p>Santa Catarina</p>
-        </footer>
-      </aside>
-      <div id="mapid" class="animate-appear">
-        
-        <div class="orphanages" hidden>
-
-          {{#each orphanages}}
-          
-            <span hidden
-              data-id="{{this.id}}"
-              data-name="{{this.name}}"
-              data-lat="{{this.lat}}"
-              data-lng="{{this.lng}}"
-            ></span>
-
-          {{/each}}  
+            <a href="/logout">Sair</a>
+          {{else}}
+            <a href="/administration">Administração</a>
+          {{/if}}
         </div>
-        
-        
-        <a
-          href="/create-orphanage"
-          class="create-orphanage"
-          title="Cadastre um orfanato"
-        >
+
+        {{#if settingsData.haveData}}
+          <strong>{{settingsData.city_name}}</strong>
+
+          <p>{{settingsData.state_name}}</p>
+        {{else}}
+          <strong>Sua cidade</strong>
+
+          <p>Seu estado</p>
+        {{/if}}
+      </footer>
+    </aside>
+    <div id="mapid" class="animate-appear">
+
+      <span hidden
+        data-havedata="{{settingsData.haveData}}"
+        data-citylat="{{settingsData.lat}}"
+        data-citylng="{{settingsData.lng}}"
+      ></span>
+
+      <div class="orphanages" hidden>
+
+        {{#each orphanages}}
+
+        <span hidden data-id="{{this.id}}" data-name="{{this.name}}" data-lat="{{this.lat}}"
+          data-lng="{{this.lng}}"></span>
+
+        {{/each}}
+      </div>
+
+      {{#if user}}
+        <a href="/administration/create-orphanage" class="create-orphanage" title="Cadastre um orfanato">
           <img src="/images/plus.svg" alt="Criar orfanato" />
         </a>
-      </div>
+      {{/if}}
     </div>
+  </div>
 
-    <script src="/scripts/page-orphanages.js"></script>
-  </body>
+  <script src="/scripts/page-orphanages.js"></script>
+</body>
+
 </html>

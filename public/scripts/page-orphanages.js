@@ -1,8 +1,23 @@
 // create map
-const map = L.map("mapid").setView([-27.222633, -49.6455874], 15);
+const settingsSpan = document.querySelector('span[data-havedata]');
+
+const settings = settingsSpan.dataset;
+
+let map;
+
+if (settings.havedata == "true") {
+  map = L.map("mapid").setView([settings.citylat, settings.citylng], 15);
+  
+} else {
+  console.log('entrei');
+  map = L.map("mapid").setView([0, 0], 2);
+}
+
 
 // create and add tileLayer
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 // create icon
 const icon = L.icon({

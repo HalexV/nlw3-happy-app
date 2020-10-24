@@ -19,7 +19,10 @@
   <div id="administration">
     <aside class="animate-right">
       <header>
-        <img src="/images/map-marker.svg" alt="Happy" />
+        <a href="/orphanages">
+        
+          <img src="/images/map-marker.svg" alt="Happy" />
+        </a>
 
         <h2>Essa é sua página para administrar os orfanatos cadastrados</h2>
 
@@ -29,15 +32,27 @@
 
       <main>
         <div class="settings-box">
-          <a href="/settings"><img src="/images/settings.svg" alt="Configurações">Configurações</a>
+          <a href="/administration/settings"><img src="/images/settings.svg" alt="Configurações">Configurações</a>
 
         </div>
       </main>
 
       <footer>
-        <strong>Sua cidade</strong>
+        <div class="user-access">
 
-        <p>Seu estado</p>
+            <a href="/logout">Sair</a>
+          
+        </div>
+
+        {{#if settingsData.haveData}}
+          <strong>{{settingsData.city_name}}</strong>
+
+          <p>{{settingsData.state_name}}</p>
+        {{else}}
+          <strong>Sua cidade</strong>
+
+          <p>Seu estado</p>
+        {{/if}}
       </footer>
     </aside>
 
@@ -52,12 +67,12 @@
             <p>{{this.name}}</p>
 
             <div class="management-items">
-              <a href="/edit-orphanage?id={{this.id}}">
+              <a href="/administration/edit-orphanage?id={{this.id}}">
                 <span class="edit-item">
                   <img src="/images/edit.svg" alt="Editar" title="Editar">
                 </span>
               </a>
-              <a href="/delete-orphanage?id={{this.id}}">
+              <a href="/administration/delete-orphanage?id={{this.id}}" onclick="areYouSure(event)">
                 <span class="delete-item">
                   <img src="/images/remove-file.svg" alt="Deletar" title="Deletar">
                 </span>
@@ -74,7 +89,7 @@
 
   </div>
 
-
+  <script src="/scripts/page-administration.js"></script>
 </body>
 
 </html>

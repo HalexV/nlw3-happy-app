@@ -18,7 +18,7 @@ aside {
 }
 
 aside h2 {
-  margin-top: 6.4rem;
+  margin-top: 3rem;
 
   font: 800 clamp(2rem, 5vw, 3.6rem) / 1.1 "Nunito", sans-serif;
 }
@@ -49,6 +49,13 @@ aside footer p {
 .settings-box a img {
   width: 24px;
   height: 24px;
+}
+
+.user-access a {
+  text-decoration: none;
+  display: block;
+  color: white;
+  margin-bottom: 3rem;
 }
 
 main.body-main {
